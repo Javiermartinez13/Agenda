@@ -1,32 +1,51 @@
 package dominio;
+
 import java.io.Serializable;
 
-public class Contacto implements Serializable{
+public class Contacto implements Serializable {
 
     private String nombre;
-    private int númeroDeTeléfono;
+    private int numeroDeTelefono;
 
-    public void setNombre(String nombre){
-		this.nombre = nombre; 
-	}
-	public void setNúmeroDeTeléfono(int númeroDeTeléfono){
-		this.númeroDeTeléfono = númeroDeTeléfono;
-	}
-	public String getNombre(){
-		return nombre;
-	}
-	public int getNúmeroDeTeléfono(){
-		return númeroDeTeléfono;
-	}
-
-    Public String toString(){
-        String result = ("Contacto: " +nombre+ "número de teléfono: " +númeroDeTeléfono+ "Agenda\n");
-        return result;
-
+    // Constructor con parámetros
+    public Contacto(String nombre, int numeroDeTelefono) {
+        this.nombre = nombre;
+        this.numeroDeTelefono = numeroDeTelefono;
     }
-	public boolean equals (Object O){
-		Contacto c = (Contacto) obj;
-		return nombre.equals(c.nombres);
-		
+
+    // Constructor sin parámetros
+    public Contacto() {
+    }
+
+    // Getters y setters
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getNumeroDeTelefono() {
+        return numeroDeTelefono;
+    }
+
+    public void setNumeroDeTelefono(int numeroDeTelefono) {
+        this.numeroDeTelefono = numeroDeTelefono;
+    }
+
+    @Override
+    public String toString() {
+        return "Contacto{" +
+                "nombre='" + nombre + '\'' +
+                ", numeroDeTelefono=" + numeroDeTelefono +
+                '}';
+    }
+
+	public void setCorreoElectronico(String nuevoCorreo) {
+	}
+
+	public Object getCorreoElectronico() {
+		return null;
 	}
 }

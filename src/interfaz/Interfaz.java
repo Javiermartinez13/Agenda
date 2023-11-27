@@ -1,46 +1,85 @@
 package interfaz;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import dominio.*;
 
+/**
+ * Clase que representa la interfaz de usuario para gestionar la libreta de contactos.
+ */
 public class Interfaz {
-    private Map<String, String> contactos;
 
-    public Interfaz() {
-        contactos = new HashMap<>();
-    }
+    private static Libreta libreta;
 
-    public void procesarEntrada(String entrada) {
-        String[] partes = entrada.split(" ");
+    /**
+     * Método principal que se ejecuta al iniciar la interfaz.
+     *
+     * @param args Los argumentos de la línea de comandos.
+     */
+    public static void main(String[] args) {
+        libreta = Libreta.cargarLibreta("libreta.dat");
 
-        if (partes.length > 0) {
-            if (partes[0].equals("addnombre") && partes.length == 3) {
-                agregarContacto(partes[1], partes[2]);
-            } else if (partes[0].equals("list") && partes.length == 1) {
-                listarContactos();
+        if (args.length == 0 || args[0].equals("help")) {
+            mostrarAyuda();
+        } else if (args[0].equals("add")) {
+            if (args.length != 4) {
+                System.out.println("Formato incorrecto para añadir contacto. Uso: java -jar libreta.jar add <nombre> <teléfono> <correo>");
             } else {
-                System.out.println("Entrada inválida. Use 'addnombre nombre telefono' o 'list'.");
+                String nombre = args[1];
+                int telefono = Integer.parseInt(args[2]);
+                String correo = args[3];
+                agregarContacto(nombre, telefono, correo);
             }
+        } else if (args[0].equals("delete")) {
+            if (args.length != 2) {
+                System.out.println("Formato incorrecto para borrar contacto. Uso: java -jar libreta.jar delete <nombre>");
+            } else {
+                String nombre = args[1];
+                borrarContacto(nombre);
+            }
+        } else if (args[0].equals("modify")) {
+            if (args.length != 4) {
+                System.out.println("Formato incorrecto para modificar contacto. Uso: java -jar libreta.jar modify <nombre> <teléfono> <correo>");
+            } else {
+                String nombre = args[1];
+                int nuevoTelefono = Integer.parseInt(args[2]);
+                String nuevoCorreo = args[3];
+                modificarContacto(nombre, nuevoTelefono, nuevoCorreo);
+            }
+        } else if (args[0].equals("list")) {
+            listarContactos();
+        } else if (args[0].equals("csv")) {
+            generarCSV();
         } else {
-            System.out.println("Entrada vacía. Use 'addnombre nombre telefono' o 'list'.");
+            System.out.println("Comando no reconocido. Use 'java -jar libreta.jar help' para obtener ayuda.");
         }
+
+        libreta.guardarLibreta("libreta.dat");
     }
 
-    private void agregarContacto(String nombre, String telefono) {
-        contactos.put(nombre, telefono);
-        System.out.println("Contacto agregado: " + nombre + " - " + telefono);
+    // Resto de los métodos de la interfaz...
+
+    private static void mostrarAyuda() {
+        // Implementación de mostrarAyuda
     }
 
-    private void listarContactos() {
-        if (contactos.isEmpty()) {
-            System.out.println("La libreta de contactos está vacía.");
-        } else {
-            System.out.println("Lista de contactos:");
-            for (Map.Entry<String, String> entry : contactos.entrySet()) {
-                System.out.println(entry.getKey() + " - " + entry.getValue());
-            }
-        }
+    private static void agregarContacto(String nombre, int telefono, String correo) {
+        Contacto nuevoContacto = new Contacto(nombre, telefono);
+        nuevoContacto.setCorreoElectronico(correo);
+        libreta.anadirContacto(nuevoContacto);
+    }
+
+    private static void borrarContacto(String nombre) {
+        libreta.borrarContacto(nombre);
+    }
+
+    private static void modificarContacto(String nombre, int nuevoTelefono, String nuevoCorreo) {
+        libreta.modificarContacto(nombre, nuevoTelefono, nuevoCorreo);
+    }
+
+    private static void listarContactos() {
+        System.out.println(libreta.toString());
+    }
+
+    private static void generarCSV() {
+        System.out.println(libreta.generarCSV());
     }
 }
