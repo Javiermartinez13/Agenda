@@ -7,17 +7,14 @@ public class Contacto implements Serializable {
     private String nombre;
     private int numeroDeTelefono;
 
-    // Constructor con parámetros
     public Contacto(String nombre, int numeroDeTelefono) {
         this.nombre = nombre;
         this.numeroDeTelefono = numeroDeTelefono;
     }
 
-    // Constructor sin parámetros
     public Contacto() {
     }
 
-    // Getters y setters
     public String getNombre() {
         return nombre;
     }

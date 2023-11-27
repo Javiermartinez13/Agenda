@@ -2,18 +2,12 @@ package interfaz;
 
 import dominio.*;
 
-/**
- * Clase que representa la interfaz de usuario para gestionar la libreta de contactos.
- */
+
 public class Interfaz {
 
     private static Libreta libreta;
 
-    /**
-     * Método principal que se ejecuta al iniciar la interfaz.
-     *
-     * @param args Los argumentos de la línea de comandos.
-     */
+    
     public static void main(String[] args) {
         libreta = Libreta.cargarLibreta("libreta.dat");
 
@@ -55,7 +49,7 @@ public class Interfaz {
         libreta.guardarLibreta("libreta.dat");
     }
 
-    // Resto de los métodos de la interfaz...
+    
 
     private static void mostrarAyuda() {
         // Implementación de mostrarAyuda
